@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_safe/screens/home/home_screen.dart';
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -9,10 +11,10 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           children: <Widget>[
             AppBar(
-              title: Text('Hello Friend!'),
+              title: const Text('Hello Friend!'),
               automaticallyImplyLeading: false,
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.shop),
               title: const Text('Home'),
@@ -20,7 +22,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.of(context).pushReplacementNamed('/');
               },
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Profile'),
@@ -28,7 +30,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.of(context).pushReplacementNamed(HomeScreen.idScreen);
               },
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.data_thresholding_outlined),
               title: const Text('Statistics'),
