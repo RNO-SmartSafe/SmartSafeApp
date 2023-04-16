@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/retry.dart';
-import 'package:smart_safe/screens/user_handel/signup/components/form_field.dart';
-
-import '../../widgets/toast_message.dart';
 
 Image logoWidget(String imageName) {
   return Image.asset(
