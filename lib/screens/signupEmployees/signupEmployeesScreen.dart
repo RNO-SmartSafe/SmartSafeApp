@@ -14,6 +14,8 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
   final SignupEmployee _newEmployee =
       SignupEmployee(id: 0, name: '', harnessNumber: '');
   final List<SignupEmployee> _employeesList = [];
+  // DatabaseReference starCountRef = FirebaseDatabase.instance.ref('posts/$postId/starCount');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
