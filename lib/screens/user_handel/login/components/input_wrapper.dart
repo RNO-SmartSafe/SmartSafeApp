@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'signup_button.dart';
 import 'input_field.dart';
-import 'login_button.dart';
 
 class InputWrapper extends StatelessWidget {
   const InputWrapper({Key? key}) : super(key: key);
