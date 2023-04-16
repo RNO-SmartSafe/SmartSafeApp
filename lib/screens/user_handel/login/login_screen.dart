@@ -4,9 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:smart_safe/screens/user_handel/signup/signup_screen.dart';
 import '../reusable_widgets.dart';
 import 'components/header.dart';
-import 'components/input_wrapper.dart';
-import 'components/login_button.dart';
-import 'components/signup_button.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String idScreen = "login";
@@ -142,7 +139,7 @@ Row signUpOption(BuildContext context) {
 }
 
 Widget forgetPassword(BuildContext context) {
-  return Container(
+  return SizedBox(
     width: MediaQuery.of(context).size.width,
     height: 35,
     child: TextButton(
