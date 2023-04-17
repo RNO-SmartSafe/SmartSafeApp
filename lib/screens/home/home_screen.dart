@@ -1,7 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_safe/screens/user_handel/login/login_screen.dart';
 
-import '../../models/loginuser.dart';
-import '../../models/signupUsers.dart';
 import '../../services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -20,41 +19,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
-  final _user = SignupUsers(
-      id: 0, name: '', company: '', email: '', password: '', phone: 0);
   // final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    final SignOut = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.cyan[500],
-      child: MaterialButton(
-        // minWidth: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () async {
-          // await _auth.signOut();
-          Navigator.pushNamedAndRemoveUntil(
-              context, LoginScreen.idScreen, (route) => false);
-        },
-        child: const Text(
-          "Logout",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-
     return Scaffold(
       backgroundColor: Colors.cyan.shade50,
       // appBar: AppBar(
       //   title: const Text('HomePage'),
       //   backgroundColor: Colors.cyan[500],
       // ),
-      // body: Center(child: SignOut),
-
-      // endDrawer: AppDrawer(),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
@@ -64,16 +38,16 @@ class _HomeScreen extends State<HomeScreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text(
-                    _user.name,
-                    style: const TextStyle(
+                    'HI JOHN',
+                    style: TextStyle(
                       fontSize: 18,
                       color: Colors.cyan,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const RotatedBox(
+                  RotatedBox(
                     quarterTurns: 135,
                     child: Icon(
                       Icons.bar_chart_rounded,

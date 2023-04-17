@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_safe/models/firebaseuser.dart';
 import 'package:smart_safe/models/signupUsers.dart';
 import '../../../widgets/toast_message.dart';
 import '../../home/home_screen.dart';
 import '../reusable_widgets.dart';
 import 'components/header.dart';
+import 'package:smart_safe/models/FirebaseUser.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class _SignUpScreenState extends State<SignupScreen> {
   String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   final _newUser = SignupUsers(
       id: 0, name: '', company: '', email: '', password: '', phone: 0);
-
+  // FirebaseUser()
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,6 +232,9 @@ class _SignUpScreenState extends State<SignupScreen> {
                             FirebaseFirestore.instance
                                 .collection('company')
                                 .doc(_companyTextController.text.toString())
+                                .collection('users')
+                                .add(userToSave);
+                            FirebaseFirestore.instance
                                 .collection('users')
                                 .add(userToSave);
                           }
