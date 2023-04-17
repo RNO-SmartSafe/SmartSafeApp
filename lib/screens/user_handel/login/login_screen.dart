@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_safe/models/loginuser.dart';
 import 'package:smart_safe/screens/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:smart_safe/screens/user_handel/signup/signup_screen.dart';
@@ -17,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
+  final _user = LoginUser(email: '', password: '');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,28 +58,43 @@ class _LoginScreenState extends State<LoginScreen> {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10)),
-                                child: reusableTextField(
-                                    "Email",
-                                    Icons.person_outline,
-                                    false,
-                                    false,
-                                    _emailTextController,
-                                    TextInputType.emailAddress)),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    labelText: "Email",
+                                    prefixIcon: Icon(
+                                      Icons.person_outline,
+                                      color: Colors.grey,
+                                    ),
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                  ),
+                                  controller: _emailTextController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  onSaved: (val) =>
+                                      setState(() => _user.email = val!),
+                                )),
                             Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey[200]!))),
-                              child: reusableTextField(
-                                "Password",
-                                Icons.vpn_key_outlined,
-                                true,
-                                false,
-                                _passwordTextController,
-                                TextInputType.visiblePassword,
-                              ),
-                            ),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey[200]!))),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    labelText: "Password",
+                                    prefixIcon: Icon(
+                                      Icons.vpn_key_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                  ),
+                                  controller: _passwordTextController,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: true,
+                                  onSaved: (val) =>
+                                      setState(() => _user.email = val!),
+                                )),
                             const SizedBox(
                               height: 40,
                             ),

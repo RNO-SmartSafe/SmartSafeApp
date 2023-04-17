@@ -1,6 +1,9 @@
 class LoginUser {
-  final String? email;
-  final String? password;
+  String? email;
+  String? password;
 
-  LoginUser({this.email, this.password});
+  LoginUser({
+    required this.email,
+    required this.password,
+  });
 }

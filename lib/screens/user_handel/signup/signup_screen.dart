@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+import 'package:smart_safe/models/signupUsers.dart';
 import '../../../widgets/toast_message.dart';
 import '../../home/home_screen.dart';
 import '../reusable_widgets.dart';
@@ -17,9 +20,14 @@ class _SignUpScreenState extends State<SignupScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _userNameTextController = TextEditingController();
+  final TextEditingController _companyTextController = TextEditingController();
   final TextEditingController _phoneTextController = TextEditingController();
   final TextEditingController _rePasswordTextController =
       TextEditingController();
+  String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  final _newUser = SignupUsers(
+      id: 0, name: '', company: '', email: '', password: '', phone: 0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,85 +62,147 @@ class _SignUpScreenState extends State<SignupScreen> {
                           height: 10,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.grey[200]!))),
-                          child: reusableTextField(
-                              "Name",
-                              Icons.person_outline,
-                              false,
-                              false,
-                              _userNameTextController,
-                              TextInputType.name),
-                        ),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[200]!))),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Name",
+                                prefixIcon: Icon(
+                                  Icons.person_outline,
+                                  color: Colors.grey,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                              ),
+                              controller: _userNameTextController,
+                              keyboardType: TextInputType.name,
+                              onSaved: (val) =>
+                                  setState(() => _newUser.name = val!),
+                            )),
                         const SizedBox(
                           height: 10,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.grey[200]!))),
-                          child: reusableTextField(
-                            "Email",
-                            Icons.email,
-                            false,
-                            false,
-                            _emailTextController,
-                            TextInputType.emailAddress,
-                          ),
-                        ),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[200]!))),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Company",
+                                prefixIcon: Icon(
+                                  Icons.business_center,
+                                  color: Colors.grey,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                              ),
+                              controller: _companyTextController,
+                              keyboardType: TextInputType.name,
+                              onSaved: (val) =>
+                                  setState(() => _newUser.company = val!),
+                            )),
                         const SizedBox(
                           height: 10,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.grey[200]!))),
-                          child: reusableTextField("Phone", Icons.phone, false,
-                              true, _phoneTextController, TextInputType.phone),
-                        ),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[200]!))),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Email",
+                                prefixIcon: Icon(
+                                  Icons.email,
+                                  color: Colors.grey,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                              ),
+                              controller: _emailTextController,
+                              keyboardType: TextInputType.emailAddress,
+                              onSaved: (val) =>
+                                  setState(() => _newUser.email = val!),
+                            )),
                         const SizedBox(
                           height: 10,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.grey[200]!))),
-                          child: reusableTextField(
-                              "Password",
-                              Icons.lock_outlined,
-                              true,
-                              false,
-                              _passwordTextController,
-                              TextInputType.visiblePassword),
-                        ),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[200]!))),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Phone",
+                                prefixIcon: Icon(
+                                  Icons.phone,
+                                  color: Colors.grey,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                              ),
+                              controller: _phoneTextController,
+                              keyboardType: TextInputType.phone,
+                              onSaved: (val) =>
+                                  setState(() => _newUser.phone = val! as int),
+                            )),
                         const SizedBox(
                           height: 10,
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.grey[200]!))),
-                          child: reusableTextField(
-                              "Confirm your password",
-                              Icons.lock_outlined,
-                              true,
-                              false,
-                              _rePasswordTextController,
-                              TextInputType.visiblePassword),
-                        ),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[200]!))),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Password",
+                                prefixIcon: Icon(
+                                  Icons.lock_outlined,
+                                  color: Colors.grey,
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                              ),
+                              obscureText: true,
+                              controller: _passwordTextController,
+                              keyboardType: TextInputType.visiblePassword,
+                              onSaved: (val) =>
+                                  setState(() => _newUser.password = val!),
+                            )),
                         const SizedBox(
-                          height: 40,
+                          height: 10,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[200]!))),
+                            child: TextFormField(
+                                decoration: const InputDecoration(
+                                  labelText: "Confirm your password",
+                                  prefixIcon: Icon(
+                                    Icons.lock_outlined,
+                                    color: Colors.grey,
+                                  ),
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: InputBorder.none,
+                                ),
+                                obscureText: true,
+                                controller: _rePasswordTextController,
+                                keyboardType: TextInputType.visiblePassword)),
+                        const SizedBox(
+                          height: 20,
                         ),
                         firebaseUIButton(context, "Sign Up", () {
                           if (validate(context)) {
@@ -150,8 +220,23 @@ class _SignUpScreenState extends State<SignupScreen> {
                             }).onError((error, stackTrace) {
                               print("Error ${error.toString()}");
                             });
+                            Map<String, String> userToSave = {
+                              'name': _userNameTextController.text,
+                              'company': _companyTextController.text,
+                              'email': _emailTextController.text,
+                              'phone': _phoneTextController.text,
+                              'password': _passwordTextController.text
+                            };
+                            FirebaseFirestore.instance
+                                .collection('company')
+                                .doc(_companyTextController.text.toString())
+                                .collection('users')
+                                .add(userToSave);
                           }
-                        })
+                        }),
+                        const SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   ),
@@ -165,6 +250,7 @@ class _SignUpScreenState extends State<SignupScreen> {
         _phoneTextController.text.isEmpty ||
         _passwordTextController.text.isEmpty ||
         _userNameTextController.text.isEmpty ||
+        _companyTextController.text.isEmpty ||
         _rePasswordTextController.text.isEmpty) {
       displayToastMessage('Please fill in all fields.', value);
       return false;

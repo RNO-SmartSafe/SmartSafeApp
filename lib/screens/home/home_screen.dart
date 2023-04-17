@@ -1,5 +1,7 @@
 import 'package:smart_safe/screens/user_handel/login/login_screen.dart';
 
+import '../../models/loginuser.dart';
+import '../../models/signupUsers.dart';
 import '../../services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  final _user = SignupUsers(
+      id: 0, name: '', company: '', email: '', password: '', phone: 0);
   // final AuthService _auth = AuthService();
 
   @override
@@ -50,7 +54,7 @@ class _HomeScreen extends State<HomeScreen> {
       // ),
       // body: Center(child: SignOut),
 
-      endDrawer: AppDrawer(),
+      // endDrawer: AppDrawer(),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
@@ -60,16 +64,16 @@ class _HomeScreen extends State<HomeScreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
-                    'HI JOHN',
-                    style: TextStyle(
+                    _user.name,
+                    style: const TextStyle(
                       fontSize: 18,
                       color: Colors.cyan,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  RotatedBox(
+                  const RotatedBox(
                     quarterTurns: 135,
                     child: Icon(
                       Icons.bar_chart_rounded,
