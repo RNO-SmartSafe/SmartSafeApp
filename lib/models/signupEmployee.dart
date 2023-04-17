@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+
 class SignupEmployee {
-  int id;
+  GlobalKey id;
   String name;
   String harnessNumber;
 

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../models/signupEmployee.dart';
+import 'package:intl/intl.dart';
 
 class SignupEmployessScreen extends StatefulWidget {
   static const String idScreen = "signupEmployee";
@@ -11,10 +13,15 @@ class SignupEmployessScreen extends StatefulWidget {
 }
 
 class _SignupEmployessScreen extends State<SignupEmployessScreen> {
+  // final FirebaseFirestore database = FirebaseFirestore.instance;
+  // FirestoreReference ref = database.getReference("server/saving-data/fireblog/posts");
   final SignupEmployee _newEmployee =
-      SignupEmployee(id: 0, name: '', harnessNumber: '');
+      SignupEmployee(id: GlobalKey(), name: '', harnessNumber: '');
   final List<SignupEmployee> _employeesList = [];
-  // DatabaseReference starCountRef = FirebaseDatabase.instance.ref('posts/$postId/starCount');
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _harnessNumberController =
+      TextEditingController();
+  String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +55,14 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Full Name'),
                 validator: (val) =>
                     (val!.isEmpty ? 'This field is mandatory' : null),
                 onSaved: (val) => setState(() => _newEmployee.name = val!),
               ),
               TextFormField(
+                controller: _harnessNumberController,
                 decoration: const InputDecoration(labelText: 'Harness Number'),
                 validator: (val) =>
                     (val!.isEmpty ? 'This field is mandatory' : null),
@@ -83,9 +92,21 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
     Harness Number : ${_newEmployee.harnessNumber}
     ''');
       _employeesList.add(SignupEmployee(
-          id: 0,
+          id: _formKey,
           name: _newEmployee.name,
           harnessNumber: _newEmployee.harnessNumber));
+      Map<String, String> employeeToSave = {
+        'name': _nameController.text,
+        'harness number': _harnessNumberController.text
+      };
+      FirebaseFirestore.instance
+          .collection('company')
+          .doc('general')
+          .collection('date')
+          .doc(currentDate)
+          .collection('employees')
+          .add(employeeToSave);
+
       form.reset();
     }
   }
