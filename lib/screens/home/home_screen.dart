@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_safe/screens/user_handel/login/login_screen.dart';
-
-import '../../services/auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/app_drawer.dart';
 import '../reports/reports_screen.dart';
 import '../signupEmployees/signupEmployeesScreen.dart';
 
