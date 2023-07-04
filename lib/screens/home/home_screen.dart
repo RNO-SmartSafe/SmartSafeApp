@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smart_safe/models/firebaseuser.dart';
 import 'package:smart_safe/screens/user_handel/login/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../reports/reports_screen.dart';
 import '../signupEmployees/signupEmployeesScreen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   // final AuthService _auth = AuthService();
+  String? uid = FirebaseAuth.instance.currentUser?.uid;
 
   @override
   Widget build(BuildContext context) {
