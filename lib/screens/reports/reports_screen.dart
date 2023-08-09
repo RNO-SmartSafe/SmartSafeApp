@@ -1,9 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:excel/excel.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
@@ -15,25 +11,6 @@ class ReportsScreen extends StatefulWidget {
 }
 
 class _ReportsScreenState extends State<ReportsScreen> {
-  Excel? excel; // Declare the excel variable
-
-  Future<void> writeToExcel(List<List<dynamic>> data) async {
-    final excel = Excel.createExcel();
-    final sheet = excel['Sheet1'];
-
-    for (var i = 0; i < data.length; i++) {
-      sheet.appendRow(data[i]);
-    }
-
-    final Directory appDocumentsDirectory =
-        await getApplicationDocumentsDirectory();
-    final String excelPath =
-        path.join(appDocumentsDirectory.path, 'example.xlsx');
-
-    await excel.save(fileName: excelPath);
-    print('Excel file saved at $excelPath');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +75,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
             ['Name', 'Harness ID', 'Safe', 'Time'],
             // Add your data rows here
           ];
-          await writeToExcel(data); // Write data to Excel file
         },
         child: const Icon(Icons.file_download),
       ),

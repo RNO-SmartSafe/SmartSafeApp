@@ -3,6 +3,7 @@ import 'package:smart_safe/models/firebaseuser.dart';
 import 'package:smart_safe/screens/user_handel/login/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../real_time_state/real_time_screen.dart';
 import '../reports/reports_screen.dart';
 import '../signupEmployees/signupEmployeesScreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -94,7 +95,7 @@ class _HomeScreen extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ReportsScreen(),
+                              builder: (context) => const RealTimeScreen(),
                             ),
                           );
                         },

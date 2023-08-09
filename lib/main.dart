@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:smart_safe/screens/home/home_screen.dart';
+import 'package:smart_safe/screens/real_time_state/real_time_screen.dart';
 import 'package:smart_safe/screens/reports/reports_screen.dart';
 import 'package:smart_safe/screens/signupEmployees/signupEmployeesScreen.dart';
 import 'package:smart_safe/screens/user_handel/signup/signup_screen.dart';
@@ -68,6 +69,7 @@ class Main extends StatelessWidget {
           //user stuff
           LoginScreen.idScreen: (context) => LoginScreen(),
           SignupScreen.idScreen: (context) => const SignupScreen(),
+          RealTimeScreen.idScreen: (context) => const RealTimeScreen(),
           //   // ProfileScreen.idScreen: (context) => const ProfileScreen(),
 
           //   //features
