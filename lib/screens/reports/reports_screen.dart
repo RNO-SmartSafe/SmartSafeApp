@@ -1,100 +1,107 @@
-import 'dart:math';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:excel/excel.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class ReportsScreen extends StatefulWidget {
-  static const String idScreen = "reports";
   const ReportsScreen({Key? key}) : super(key: key);
+
+  static const String idScreen = "reports";
 
   @override
   _ReportsScreenState createState() => _ReportsScreenState();
 }
 
 class _ReportsScreenState extends State<ReportsScreen> {
-  final DataTableSource _data = MyData();
+  Excel? excel; // Declare the excel variable
+
+  Future<void> writeToExcel(List<List<dynamic>> data) async {
+    final excel = Excel.createExcel();
+    final sheet = excel['Sheet1'];
+
+    for (var i = 0; i < data.length; i++) {
+      sheet.appendRow(data[i]);
+    }
+
+    final Directory appDocumentsDirectory =
+        await getApplicationDocumentsDirectory();
+    final String excelPath =
+        path.join(appDocumentsDirectory.path, 'example.xlsx');
+
+    await excel.save(fileName: excelPath);
+    print('Excel file saved at $excelPath');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "Reports",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
+        title: const Text('Reports'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: PaginatedDataTable(
-              source: _data,
-              columns: const [
-                DataColumn(label: Text('ID')),
-                DataColumn(label: Text('Name')),
-                DataColumn(label: Text('harness Number')),
-                DataColumn(label: Text('Safe')),
-                // DataColumn(label: Text('time')),
-                // DataColumn(label: Text('Date')),
-              ],
-              columnSpacing: 70,
-              horizontalMargin: 60,
-              rowsPerPage: 10,
-            ),
-          ),
-        ],
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('reports').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!.docs;
+            data.sort((a, b) {
+              final timestampA = a['Time'] as Timestamp;
+              final timestampB = b['Time'] as Timestamp;
+              return timestampB.compareTo(timestampA);
+            });
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: const [
+                  DataColumn(label: Text('Name')),
+                  DataColumn(label: Text('Harness ID')),
+                  DataColumn(label: Text('Safe')),
+                  DataColumn(label: Text('Time')),
+                  // Add more DataColumn widgets for additional columns
+                ],
+                rows: data.map((doc) {
+                  final column1Data = doc['Name'];
+                  final column2Data = doc['Harness ID'];
+                  final column3Data = doc['Safe'];
+                  final column4Data = doc['Time'] as Timestamp;
+                  final dateTime = column4Data.toDate();
+                  final formattedTime = dateTime.toString();
+                  // Add more variables for additional columns' data
+
+                  return DataRow(
+                    cells: [
+                      DataCell(Center(
+                          child: column3Data == 'Yes'
+                              ? const Icon(Icons.square, color: Colors.grey)
+                              : const Icon(Icons.rectangle,
+                                  color: Color.fromARGB(255, 153, 38, 38)))),
+                      DataCell(Center(child: Text(column1Data))),
+                      DataCell(Center(child: Text(column2Data))),
+                      DataCell(Center(child: Text(formattedTime))),
+                      // Add more DataCell widgets for additional columns' data
+                    ],
+                  );
+                }).toList(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final data = [
+            ['Name', 'Harness ID', 'Safe', 'Time'],
+            // Add your data rows here
+          ];
+          await writeToExcel(data); // Write data to Excel file
+        },
+        child: const Icon(Icons.file_download),
       ),
     );
   }
-}
-
-class MyData extends DataTableSource {
-  final List<Map<String, dynamic>> _data = List.generate(
-      200,
-      (index) => {
-            "id": index,
-            "title": "Name $index",
-            "harness Number": Random().nextInt(10000),
-            "safe": Random().nextInt(2),
-          });
-
-  @override
-  DataRow? getRow(int index) {
-    return DataRow(cells: [
-      DataCell(Text(_data[index]['id'].toString())),
-      DataCell(Text(_data[index]["title"])),
-      DataCell(
-        Center(
-          child: Text(_data[index]["harness Number"].toString()),
-        ),
-      ),
-      DataCell(
-        _data[index]["safe"].toString() == "0"
-            ? const Icon(
-                Icons.favorite,
-                color: Colors.pink,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              )
-            : const Icon(
-                Icons.favorite,
-                color: Colors.grey,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-      ),
-    ]);
-  }
-
-  @override
-  // TODO: implement isRowCountApproximate
-  bool get isRowCountApproximate => false;
-
-  @override
-  // TODO: implement rowCount
-  int get rowCount => _data.length;
-
-  @override
-  // TODO: implement selectedRowCount
-  int get selectedRowCount => 0;
 }

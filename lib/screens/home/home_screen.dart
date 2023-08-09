@@ -87,7 +87,25 @@ class _HomeScreen extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 15),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      _cardMenu(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ReportsScreen(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.timer_sharp,
+                            color: Colors.white, size: 50),
+                        title: 'REAL TIME STATE',
+                        color: Colors.cyan[400]!,
+                        fontColor: Colors.white,
+                      ),
+                    ]),
+                    const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -96,11 +114,12 @@ class _HomeScreen extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ReportsScreen(),
+                                builder: (context) => const ReportsScreen(),
                               ),
                             );
                           },
-                          icon: 'assets/images/icon-reports.png',
+                          icon: const Icon(Icons.auto_graph_sharp,
+                              color: Colors.white, size: 50),
                           title: 'REPORTS',
                           color: Colors.cyan[400]!,
                           fontColor: Colors.white,
@@ -114,7 +133,8 @@ class _HomeScreen extends State<HomeScreen> {
                               ),
                             );
                           },
-                          icon: 'assets/images/construction-management.png',
+                          icon: const Icon(Icons.contacts,
+                              color: Colors.white, size: 50),
                           title: 'SIGN UP EMPLOYEES',
                           color: Colors.cyan[500]!,
                           fontColor: Colors.white,
@@ -134,7 +154,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   Widget _cardMenu({
     required String title,
-    required String icon,
+    required Icon icon,
     VoidCallback? onTap,
     Color color = Colors.white,
     Color fontColor = Colors.grey,
@@ -143,7 +163,7 @@ class _HomeScreen extends State<HomeScreen> {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          vertical: 36,
+          vertical: 20,
         ),
         width: 156,
         decoration: BoxDecoration(
@@ -152,7 +172,8 @@ class _HomeScreen extends State<HomeScreen> {
         ),
         child: Column(
           children: [
-            Image.asset(icon),
+            // Image.asset(icon),
+            icon,
             const SizedBox(height: 10),
             Text(
               title,

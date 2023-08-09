@@ -33,7 +33,7 @@ exports.sendNotifications = functions.firestore.document('messages/{messageId}')
         title: `${name}`,
         body: text ? (text.length <= 100 ? text : text.substring(0, 97) + '...') : 'blabla',
       },
-      token: "exZk7852Txy6GtAvh0ii55:APA91bEYn8x1HLCivK2QhoLh4fu_WWOci5PIalksq3CP9Q4gy3k12QpvG-AB73N1q5A2SmrBlxZYgjOyJzn_FBDzMfv7GwS1e7kKJHeqnv25ict5h8kX-uZ5EmREqriiCyAPl0gFXhdd",
+      token: "faVV5d8iRx-3Pv7bgKMASb:APA91bEgfe-t9sIrq_dRacCEb-6boS9ZFou0nhOurhcO_sLa0VSGXysWx4p5nKmchXVhfn-mtxwXNYiYzhwtGyrW41ttqONmu1tco4Bc_6v_88tTQODoDpXaVbMSRrvvhIiK792mIXgd",
     };
 
     // Get the list of device tokens.

@@ -30,6 +30,13 @@
             {
               "client_id": "61996553605-v6nvio80d34pnqkfv6mbl2441ju6namk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "61996553605-4u1v4926ik5qs2j5sbhpfiiq6aee2e2u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartSafe"
+              }
             }
           ]
         }

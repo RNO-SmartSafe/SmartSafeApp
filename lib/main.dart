@@ -36,6 +36,8 @@ Future<void> main() async {
   FirebaseFunctions functions = FirebaseFunctions.instance;
 
   await firebaseMessaging.requestPermission();
+  var status = await Permission.storage.request();
+  print("status $status");
   String? token = await firebaseMessaging.getToken();
   print('token $token'); // this is how I get the token for now
 
@@ -77,7 +79,7 @@ class Main extends StatelessWidget {
           //   // GameScreen.idScreen: (context) => const GameScreen(),
 
           //   //shop
-          ReportsScreen.idScreen: (context) => const ReportsScreen(),
+          ReportsScreen.idScreen: (context) => ReportsScreen(),
           SignupEmployessScreen.idScreen: (context) =>
               const SignupEmployessScreen(),
           //   // NewShopScreen.idScreen: (context) => const NewShopScreen(),
@@ -127,8 +129,8 @@ class Main extends StatelessWidget {
           //   },
           // );
         ),
-        home: const Wrapper(),
-        // home: const HomeScreen(),
+        // home: const Wrapper(),
+        home: const HomeScreen(),
       ),
     );
   }
