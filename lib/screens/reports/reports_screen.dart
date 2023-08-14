@@ -31,7 +31,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     DataColumn(label: Text('Name')),
                     //   DataColumn(label: Text('Harness ID')),
                     // DataColumn(label: Text('Time')),
-                    DataColumn(label: Text('Date')),
+                    DataColumn(label: Text('Date & Time')),
                     DataColumn(label: Text('IOT')),
                     // DataColumn(label: Text('from')),
                     // DataColumn(label: Text('message type')),
