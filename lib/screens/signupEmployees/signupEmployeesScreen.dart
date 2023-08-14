@@ -99,8 +99,8 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
           name: _newEmployee.name,
           harnessNumber: _newEmployee.harnessNumber));
       Map<String, String> employeeToSave = {
-        'name': _nameController.text,
-        'harness number': _harnessNumberController.text
+        'Name': _nameController.text,
+        'Harness ID': _harnessNumberController.text
       };
       FirebaseFirestore.instance
           .collection('company')
