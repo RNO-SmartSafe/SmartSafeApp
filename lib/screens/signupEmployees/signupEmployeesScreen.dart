@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../models/signupEmployee.dart';
 import 'package:intl/intl.dart';
 
+import 'components/EmployeeListManager.dart';
+
 class SignupEmployessScreen extends StatefulWidget {
   static const String idScreen = "signupEmployee";
 
@@ -15,6 +17,7 @@ class SignupEmployessScreen extends StatefulWidget {
 class _SignupEmployessScreen extends State<SignupEmployessScreen> {
   // final FirebaseFirestore database = FirebaseFirestore.instance;
   // FirestoreReference ref = database.getReference("server/saving-data/fireblog/posts");
+  final EmployeeListManager _employeeListManager = EmployeeListManager();
   final SignupEmployee _newEmployee =
       SignupEmployee(id: GlobalKey(), name: '', harnessNumber: '');
   final List<SignupEmployee> _employeesList = [];
@@ -91,7 +94,7 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
     Full Name : ${_newEmployee.name}
     Harness Number : ${_newEmployee.harnessNumber}
     ''');
-      _employeesList.add(SignupEmployee(
+      _employeeListManager.addEmployee(SignupEmployee(
           id: _formKey,
           name: _newEmployee.name,
           harnessNumber: _newEmployee.harnessNumber));
@@ -118,6 +121,7 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
               itemBuilder: (context, index) {
+                final employee = _employeeListManager.employeesList[index];
                 return Column(
                   children: <Widget>[
                     ListTile(
@@ -127,12 +131,12 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
                         size: 40.0,
                       ),
                       title: Text(
-                        _employeesList[index].name.toUpperCase(),
+                        employee.name.toUpperCase(),
                         style: const TextStyle(
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(_employeesList[index].harnessNumber),
+                      subtitle: Text(employee.harnessNumber),
                       onTap: () {},
                     ),
                     const Divider(
@@ -141,7 +145,7 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
                   ],
                 );
               },
-              itemCount: _employeesList.length,
+              itemCount: _employeeListManager.employeesList.length,
             ),
           ),
         ),
