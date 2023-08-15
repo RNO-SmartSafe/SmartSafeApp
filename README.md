@@ -27,8 +27,6 @@ In the Reports screen, you can access comprehensive information about instances 
 - **Date & Time:** The specific date and time when the exposure occurred.
 - **IOT:** The location within which the employee was situated at the time of the incident.
 
-This information is crucial for monitoring workplace safety and ensuring that appropriate measures are taken to protect workers.
-
 
 <img src="assets/gif/ReportsScreen.gif" alt="Simulator GIF" width="150">
 
