@@ -91,9 +91,9 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
     if (form!.validate()) {
       form.save();
       print('''
-    Full Name : ${_newEmployee.name}
-    Harness Number : ${_newEmployee.harnessNumber}
-    ''');
+        Full Name : ${_newEmployee.name}
+        Harness Number : ${_newEmployee.harnessNumber}
+        ''');
       _employeeListManager.addEmployee(SignupEmployee(
           id: _formKey,
           name: _newEmployee.name,
