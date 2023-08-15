@@ -101,14 +101,13 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
       Map<String, String> employeeToSave = {
         'Name': _nameController.text,
         'Harness ID': _harnessNumberController.text,
-        'Safe': 'YES'
+        'Safe': 'YES',
+        'ModifiedTime': 'None'
       };
       FirebaseFirestore.instance
-          .collection('company')
-          .doc('general')
-          .collection('date')
+          .collection('Date')
           .doc(currentDate)
-          .collection('employees')
+          .collection('Employees')
           .add(employeeToSave);
 
       form.reset();

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class ReportsScreen extends StatefulWidget {
 }
 
 class _ReportsScreenState extends State<ReportsScreen> {
+  String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +22,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('Alerts').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('Date')
+              .doc(currentDate)
+              .collection('Alerts')
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.data!.docs;

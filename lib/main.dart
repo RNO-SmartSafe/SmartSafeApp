@@ -11,18 +11,10 @@ import 'package:smart_safe/screens/reports/reports_screen.dart';
 import 'package:smart_safe/screens/signupEmployees/signupEmployeesScreen.dart';
 import 'package:smart_safe/screens/user_handel/signup/signup_screen.dart';
 import 'package:smart_safe/screens/wrapper.dart';
-import 'package:smart_safe/services/PushNotificationService.dart';
-import 'package:smart_safe/services/notifications.dart';
-import 'firebase_options.dart';
-import 'models/FirebaseUser.dart';
 import 'package:smart_safe/services/auth.dart';
 import 'screens/user_handel/login/login_screen.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'providers/auth_provider.dart';
-// import 'screens/home/home_screen.dart';
-// import 'screens/user_handel/profile/profile_screen.dart';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -63,33 +55,12 @@ class Main extends StatelessWidget {
         initialRoute: HomeScreen.idScreen,
         debugShowCheckedModeBanner: false,
         routes: {
-          // main screen
-          // HomeScreen.idScreen: (context) => const HomeScreen(),
-
-          //user stuff
           LoginScreen.idScreen: (context) => LoginScreen(),
           SignupScreen.idScreen: (context) => const SignupScreen(),
           RealTimeScreen.idScreen: (context) => const RealTimeScreen(),
-          //   // ProfileScreen.idScreen: (context) => const ProfileScreen(),
-
-          //   //features
-          //   // CalculatorScreen.idScreen: (context) => const CalculatorScreen(),
-          //   // InfoScreen.idScreen: (context) => const InfoScreen(),
-          //   // TranspotationScreen.idScreen: (context) =>
-          //   //     const TranspotationScreen(),
-          //   // RecycleScreen.idScreen: (context) => const RecycleScreen(),
-          //   // GameScreen.idScreen: (context) => const GameScreen(),
-
-          //   //shop
           ReportsScreen.idScreen: (context) => ReportsScreen(),
           SignupEmployessScreen.idScreen: (context) =>
               const SignupEmployessScreen(),
-          //   // NewShopScreen.idScreen: (context) => const NewShopScreen(),
-          //   // ProductFullScreen.idScreen: (context) => const ProductFullScreen(),
-
-          //   //addons?
-          //   // CameraDetector.idScreen: (context) => const CameraDetector(),
-          //   // BarcodeScreen.idScreen: (context) => const BarcodeScreen(),
         },
         theme: ThemeData(
           brightness: Brightness.light,
@@ -100,36 +71,6 @@ class Main extends StatelessWidget {
             colorScheme:
                 Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
           ),
-          // child: MaterialApp(
-          // initialRoute: LoginScreen.idScreen,
-          //   debugShowCheckedModeBanner: false,
-          //   routes: {
-          //     //main screen
-          // HomeScreen.idScreen: (context) => const HomeScreen(),
-
-          //     //user stuff
-          //     LoginScreen.idScreen: (context) => const LoginScreen(),
-          //     SignupScreen.idScreen: (context) => const SignupScreen(),
-          //     // ProfileScreen.idScreen: (context) => const ProfileScreen(),
-
-          //     //features
-          //     // CalculatorScreen.idScreen: (context) => const CalculatorScreen(),
-          //     // InfoScreen.idScreen: (context) => const InfoScreen(),
-          //     // TranspotationScreen.idScreen: (context) =>
-          //     //     const TranspotationScreen(),
-          //     // RecycleScreen.idScreen: (context) => const RecycleScreen(),
-          //     // GameScreen.idScreen: (context) => const GameScreen(),
-
-          //     //shop
-          //     // ShopScreen.idScreen: (context) => const ShopScreen(),
-          //     // NewShopScreen.idScreen: (context) => const NewShopScreen(),
-          //     // ProductFullScreen.idScreen: (context) => const ProductFullScreen(),
-
-          //     //addons?
-          //     // CameraDetector.idScreen: (context) => const CameraDetector(),
-          //     // BarcodeScreen.idScreen: (context) => const BarcodeScreen(),
-          //   },
-          // );
         ),
         // home: const Wrapper(),
         home: const HomeScreen(),
@@ -157,7 +98,6 @@ Future<void> saveTokenToDatabase(String token) async {
 }
 
 Future<void> onUserPictureLiked(String token) async {
-  // Assume user is logged in for this example
   await FirebaseFirestore.instance.collection('users').doc(token).update({
     'tokens': FieldValue.arrayUnion([token]),
   });
@@ -165,6 +105,7 @@ Future<void> onUserPictureLiked(String token) async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
+
   // Implement custom logic to handle the background message here
 }
 
@@ -185,24 +126,3 @@ Future<void> sendNotifications(RemoteMessage message) async {
   print('Background Message received: ${message.notification?.title}');
   // Handle the received message as desired
 }
-
-
-// void showNotification(Map<String, dynamic> messageData) async {
-//   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-//       AndroidNotificationDetails(
-//     'channel_id',
-//     'channel_name',
-//     importance: Importance.max,
-//     priority: Priority.high,
-//   );
-
-//   const NotificationDetails platformChannelSpecifics =
-//       NotificationDetails(android: androidPlatformChannelSpecifics);
-
-//   await _flutterLocalNotificationsPlugin.show(
-//     0,
-//     messageData['notification']['title'] as String,
-//     messageData['notification']['body'] as String,
-//     platformChannelSpecifics,
-//   );
-// }

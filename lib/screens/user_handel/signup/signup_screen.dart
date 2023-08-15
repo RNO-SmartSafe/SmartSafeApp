@@ -2,13 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_safe/models/user.dart';
 import 'package:smart_safe/models/signupUsers.dart';
 import '../../../widgets/toast_message.dart';
 import '../../home/home_screen.dart';
 import '../reusable_widgets.dart';
 import 'components/header.dart';
-import 'package:smart_safe/models/FirebaseUser.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -26,7 +24,7 @@ class _SignUpScreenState extends State<SignupScreen> {
   final TextEditingController _phoneTextController = TextEditingController();
   final TextEditingController _rePasswordTextController =
       TextEditingController();
-  // String uid = FirebaseAuth.instance.currentUser!.uid;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   final _newUser = SignupUsers(
       id: 0, name: '', company: '', email: '', password: '', phone: 0);
@@ -215,7 +213,6 @@ class _SignUpScreenState extends State<SignupScreen> {
                                     password: _passwordTextController.text)
                                 .then((value) {
                               print("Created New Account");
-                              // print(uid);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -231,23 +228,17 @@ class _SignUpScreenState extends State<SignupScreen> {
                               'phone': _phoneTextController.text,
                               'password': _passwordTextController.text
                             };
-                            // addUser(uid, userToSave);
-                            // // FirebaseFirestore.instance
-                            // //     .collection('companyy')
-                            // //     .doc(_companyTextController.text.toString())
-                            // //     .collection('users')
-                            // //     .doc(uid)
-                            // //     .set(userToSave);
-                            // print(uid);
-                            // try {
-                            //   await FirebaseFirestore.instance
-                            //       .collection('users')
-                            //       .doc(uid)
-                            //       .set(userToSave);
-                            //   print('User added successfully!');
-                            // } catch (e) {
-                            //   print('Error adding user: $e');
-                            // }
+                            addUser(uid, userToSave);
+                            print(uid);
+                            try {
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(uid)
+                                  .set(userToSave);
+                              print('User added successfully!');
+                            } catch (e) {
+                              print('Error adding user: $e');
+                            }
                           }
                         }),
                         const SizedBox(
@@ -273,10 +264,6 @@ class _SignUpScreenState extends State<SignupScreen> {
     } else if (_userNameTextController.text.length < 3) {
       displayToastMessage("Name must be at least 3 characters.", value);
       return false;
-      // } else if (_emailTextController.text.contains('@') ||
-      //     _emailTextController.text.endsWith('.com')) {
-      //   displayToastMessage('Enter a Valid Email Address.', value);
-      //   return false;
     } else if (_phoneTextController.text.trim().length < 10) {
       displayToastMessage(
           'Number must be at least 10 characters in length.', value);
@@ -299,8 +286,6 @@ class _SignUpScreenState extends State<SignupScreen> {
   Future<void> addUser(String userId, Map<String, dynamic> userData) async {
     try {
       await FirebaseFirestore.instance
-          .collection('companyy')
-          .doc(_companyTextController.text.toString())
           .collection('users')
           .doc(userId)
           .set(userData);

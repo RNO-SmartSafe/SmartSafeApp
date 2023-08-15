@@ -25,11 +25,9 @@ class _RealTimeScreenState extends State<RealTimeScreen> {
           Flexible(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('company')
-                  .doc('general')
-                  .collection('date')
+                  .collection('Date')
                   .doc(currentDate)
-                  .collection('employees')
+                  .collection('Employees')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
