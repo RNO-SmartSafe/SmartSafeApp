@@ -15,10 +15,6 @@ Daily, the employer signs workers onto safety harnesses, recording each employee
 
 <img src="assets/gif/SignupEmployees.gif" alt="Simulator GIF" width="150">
 
-### Push Notifications
-
-As soon as an employee is in danger, the application sends a notification to the user alerting the employee's name and where he is.
-
 ### Reports
 
 In the Reports screen, you can access comprehensive information about instances where workers were exposed to danger without wearing proper protective equipment. The presented table provides the following details:
@@ -33,3 +29,9 @@ In the Reports screen, you can access comprehensive information about instances 
 ### Real Time State
 
 On this screen, the user can immediately identify whether an employee is in danger at that moment or whether he is properly secured.
+
+### Push Notifications
+
+As soon as an employee is in danger, the application sends a notification to the user alerting the employee's name and where he is.
+
+<img src="assets/gif/NotificationAlert.gif" alt="Simulator GIF" width="150">
