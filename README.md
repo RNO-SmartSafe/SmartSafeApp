@@ -1,16 +1,19 @@
-# smart_safe
 
-A new Flutter project.
+# Smart Safe Application
 
-## Getting Started
+## Users
+SmartSafe application is for Safety inspectors, Construction contractors, Construction site managers, who want to protect the lives of their workers and prevent injuries or death because of falls from heights.
 
-This project is a starting point for a Flutter application.
+## Main Goal
+our application alerts about being in danger and pass the information right to Safety inspector so that he can maximize the protection of his employees' lives.
 
-A few resources to get you started if this is your first Flutter project:
+## Screens
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Signup employees
+<img src="assets/gif/SignupEmployees.gif" alt="Simulator GIF" width="150">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Push Notifications
+
+### Reports
+
+### Real Time State
