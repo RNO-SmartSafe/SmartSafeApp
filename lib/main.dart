@@ -22,9 +22,7 @@ final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // qrCode.make()
   await Firebase.initializeApp();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   FirebaseFunctions functions = FirebaseFunctions.instance;
 
@@ -32,7 +30,7 @@ Future<void> main() async {
   var status = await Permission.storage.request();
   print("status $status");
   String? token = await firebaseMessaging.getToken();
-  print('token $token'); // this is how I get the token for now
+  print('token $token');
 
   configureFirebaseMessaging();
 
@@ -51,14 +49,13 @@ class Main extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        // return MaterialApp(
         initialRoute: HomeScreen.idScreen,
         debugShowCheckedModeBanner: false,
         routes: {
           LoginScreen.idScreen: (context) => LoginScreen(),
           SignupScreen.idScreen: (context) => const SignupScreen(),
           RealTimeScreen.idScreen: (context) => const RealTimeScreen(),
-          ReportsScreen.idScreen: (context) => ReportsScreen(),
+          ReportsScreen.idScreen: (context) => const ReportsScreen(),
           SignupEmployessScreen.idScreen: (context) =>
               const SignupEmployessScreen(),
         },
@@ -73,7 +70,7 @@ class Main extends StatelessWidget {
           ),
         ),
         // home: const Wrapper(),
-        home: const HomeScreen(),
+        home: LoginScreen(),
       ),
     );
   }
@@ -89,7 +86,6 @@ Future<void> createUser() async {
 }
 
 Future<void> saveTokenToDatabase(String token) async {
-  // Assume user is logged in for this example
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
   await FirebaseFirestore.instance.collection('users').doc(userId).update({
@@ -105,24 +101,16 @@ Future<void> onUserPictureLiked(String token) async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
-
-  // Implement custom logic to handle the background message here
 }
 
 void configureFirebaseMessaging() {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  // Handle messages when the app is in the foreground
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Foreground Message received: ${message.notification?.title}');
-    // Handle the received message as desired
   });
-
-  // Handle messages when the app is in the background or terminated
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
 Future<void> sendNotifications(RemoteMessage message) async {
   print('Background Message received: ${message.notification?.title}');
-  // Handle the received message as desired
 }

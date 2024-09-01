@@ -27,10 +27,6 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.cyan.shade50,
-      // appBar: AppBar(
-      //   title: const Text('HomePage'),
-      //   backgroundColor: Colors.cyan[500],
-      // ),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.only(top: 18, left: 24, right: 24),

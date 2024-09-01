@@ -41,23 +41,22 @@ class _RealTimeScreenState extends State<RealTimeScreen> {
                         DataColumn(label: Text('Harness ID')),
                       ],
                       rows: data.map((doc) {
-                        final column3Data = doc['Safe'];
-                        final column1Data = doc['Name'];
-                        final column2Data = doc['Harness ID'];
+                        final safeData = doc['Safe'];
+                        final nameData = doc['Name'];
+                        final harnessData = doc['Harness ID'];
 
                         return DataRow(
                           cells: [
                             DataCell(Center(
                                 child: Icon(
-                              column3Data == 'NO'
+                              safeData == 'NO'
                                   ? Icons.error_outline
                                   : Icons.check_circle_outline,
-                              color: column3Data == 'NO'
-                                  ? Colors.red
-                                  : Colors.green,
+                              color:
+                                  safeData == 'NO' ? Colors.red : Colors.green,
                             ))),
-                            DataCell(Center(child: Text(column1Data))),
-                            DataCell(Center(child: Text(column2Data))),
+                            DataCell(Center(child: Text(nameData))),
+                            DataCell(Center(child: Text(harnessData))),
                           ],
                         );
                       }).toList(),

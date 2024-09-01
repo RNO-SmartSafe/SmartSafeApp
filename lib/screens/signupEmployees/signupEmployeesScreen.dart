@@ -15,8 +15,6 @@ class SignupEmployessScreen extends StatefulWidget {
 }
 
 class _SignupEmployessScreen extends State<SignupEmployessScreen> {
-  // final FirebaseFirestore database = FirebaseFirestore.instance;
-  // FirestoreReference ref = database.getReference("server/saving-data/fireblog/posts");
   final EmployeeListManager _employeeListManager = EmployeeListManager();
   final SignupEmployee _newEmployee =
       SignupEmployee(id: GlobalKey(), name: '', harnessNumber: '');
