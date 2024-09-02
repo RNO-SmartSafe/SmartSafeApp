@@ -66,16 +66,15 @@ Container firebaseUIButton(
     height: 50,
     margin: const EdgeInsets.symmetric(horizontal: 50),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(90),
-    ),
+        borderRadius: BorderRadius.circular(90), color: Colors.cyan),
     child: ElevatedButton(
       onPressed: onTap,
-      // style: ElevatedButton.styleFrom(
-      //   backgroundColor: Colors.cyan[500], // background color
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(30),
-      //   ),
-      // ),
+      style: ElevatedButton.styleFrom(
+        primary: Colors.cyan[500], // Background color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
       child: Text(
         title,
         style: const TextStyle(
