@@ -18,11 +18,37 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
   final EmployeeListManager _employeeListManager = EmployeeListManager();
   final SignupEmployee _newEmployee =
       SignupEmployee(id: GlobalKey(), name: '', harnessNumber: '');
-  final List<SignupEmployee> _employeesList = [];
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _harnessNumberController =
       TextEditingController();
   String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchEmployees();
+  }
+
+  Future<void> _fetchEmployees() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('Date')
+        .doc(currentDate)
+        .collection('Employees')
+        .get();
+
+    final List<SignupEmployee> fetchedEmployees = snapshot.docs.map((doc) {
+      final data = doc.data();
+      return SignupEmployee(
+        id: _newEmployee.id,
+        name: data['Name'] ?? '',
+        harnessNumber: data['Harness ID'] ?? '',
+      );
+    }).toList();
+
+    setState(() {
+      _employeeListManager.setEmployees(fetchedEmployees);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +100,6 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
                 margin: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: () => _onSubmit(),
-                  // style: ElevatedButton.styleFrom(
-                  //   backgroundColor: Colors.blueGrey, // Background color
-                  //   //onPrimary: Colors.white,   // Text color
-                  // ),
                   child: const Text('Submit'),
                 ),
               )
@@ -111,6 +133,7 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
           .add(employeeToSave);
 
       form.reset();
+      _fetchEmployees(); // Refresh the list after adding a new employee
     }
   }
 
