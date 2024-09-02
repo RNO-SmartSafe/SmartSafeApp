@@ -59,29 +59,30 @@ TextField reusableTextField(
   );
 }
 
-Container firebaseUIButton(BuildContext context, String title, Function onTap) {
+Container firebaseUIButton(
+    BuildContext context, String title, VoidCallback onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
     margin: const EdgeInsets.symmetric(horizontal: 50),
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(90),
+    ),
     child: ElevatedButton(
-      onPressed: () {
-        onTap();
-      },
-      style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return Colors.cyan[400];
-            }
-            return Colors.cyan[500];
-          }),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
+      onPressed: onTap,
+      // style: ElevatedButton.styleFrom(
+      //   backgroundColor: Colors.cyan[500], // background color
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(30),
+      //   ),
+      // ),
       child: Text(
         title,
         style: const TextStyle(
-            color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          color: Colors.white,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
   );

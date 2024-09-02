@@ -26,7 +26,10 @@ Future<void> main() async {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   FirebaseFunctions functions = FirebaseFunctions.instance;
 
-  await firebaseMessaging.requestPermission();
+  NotificationSettings firebaseMessagingStatus =
+      await firebaseMessaging.requestPermission();
+  print(
+      "firebaseMessagingStatus: ${firebaseMessagingStatus.authorizationStatus}");
   var status = await Permission.storage.request();
   print("status $status");
   String? token = await firebaseMessaging.getToken();
@@ -39,6 +42,8 @@ Future<void> main() async {
 
 class Main extends StatelessWidget {
   const Main({Key? key}) : super(key: key);
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class Main extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey, // Set the navigator key here
         initialRoute: HomeScreen.idScreen,
         debugShowCheckedModeBanner: false,
         routes: {
@@ -69,7 +75,6 @@ class Main extends StatelessWidget {
                 Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
           ),
         ),
-        // home: const Wrapper(),
         home: LoginScreen(),
       ),
     );
@@ -108,6 +113,19 @@ void configureFirebaseMessaging() {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Foreground Message received: ${message.notification?.title}');
   });
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print(
+        'Notification caused app to open from background: ${message.messageId}');
+    //if (message.data.isNotEmpty) {
+    // Navigate to a specific screen based on the payload
+    Navigator.pushNamed(
+      Main.navigatorKey.currentContext!,
+      RealTimeScreen.idScreen,
+      arguments: message.data,
+    );
+    //}
+  });
+  ;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 

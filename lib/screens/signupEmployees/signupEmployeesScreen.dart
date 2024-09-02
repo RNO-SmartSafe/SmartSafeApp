@@ -72,13 +72,15 @@ class _SignupEmployessScreen extends State<SignupEmployessScreen> {
               ),
               Container(
                 margin: const EdgeInsets.all(10.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () => _onSubmit(),
-                  color: Colors.blueGrey,
-                  textColor: Colors.white,
+                  // style: ElevatedButton.styleFrom(
+                  //   backgroundColor: Colors.blueGrey, // Background color
+                  //   //onPrimary: Colors.white,   // Text color
+                  // ),
                   child: const Text('Submit'),
                 ),
-              ),
+              )
             ],
           ),
         ),

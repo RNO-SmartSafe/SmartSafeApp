@@ -2,6 +2,7 @@
     package="com.example.smart_safe">
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"/>
     <uses-permission android:name="android.permission.READ_MEDIA_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
             android:label="smart_safe"
             android:name="${applicationName}"

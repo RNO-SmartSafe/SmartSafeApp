@@ -36,7 +36,7 @@ class Submit extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.cyan[500]),
+        //style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan[500]),
         onPressed: () {
           _submit(context);
         },
